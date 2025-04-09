@@ -1,6 +1,8 @@
 # ccips-controller
 Pilot 3 CCIPS controller component
 
+© Mattin Antartiko Elorza Forcada
+
 The CCIPS controller is developed in go using the [`go-netconf-client`](https://github.com/openshift-telco/go-netconf-client) library.
 
 
