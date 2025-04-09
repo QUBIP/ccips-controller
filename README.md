@@ -40,21 +40,21 @@ It will prompt the following message `INFO: 2025/04/09 09:24:19 main.go:12: HTTP
     - ipDMZ: Agent's private IP. (G2G)
     - networkInternal: Private subnet. (G2G)
 * encAlg: Algorithm used by the tunnel to encrypt. supports:
- - des
- - 3des
- - aes
+    - des
+    - 3des
+    - aes
 * intAlg: Algorithm used by the tunnel to check the integrity of the packets. supports:
- - hmac-md5-96
- - hmac-md5-128
- - hmac-sha1-96
- - hmac-sha1-160
- - hmac-sha2-256
+     - hmac-md5-96
+     - hmac-md5-128
+     - hmac-sha1-96
+     - hmac-sha1-160
+     - hmac-sha2-256
 * softLifeTime: Time for initialising the rekey process.
 * hardLifeTime: Time in which if the rekey has not been performed, it throws the ipsec link.
 
 
 
-```
+
 # H2H
 
 ```xml
