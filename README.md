@@ -103,7 +103,7 @@ It will prompt the following message `INFO: 2025/04/09 09:24:19 main.go:12: HTTP
 
 ```xml
 curl -X 'POST' \
-  'http://192.168.159.206:5000/ccips' \
+  'http://192.168.159.239:5000/ccips' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
