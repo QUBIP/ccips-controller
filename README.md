@@ -103,18 +103,18 @@ It will prompt the following message `INFO: 2025/04/09 09:24:19 main.go:12: HTTP
 
 ```xml
 curl -X 'POST' \
-  'http://controller_ip:5000/ccips' \
+  'http://192.168.159.206:5000/ccips' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
   "nodes": [
       {
-        "ipData": "10.0.0.201",
-        "ipControl": "192.168.165.128"
+        "ipData": "10.0.0.11",
+        "ipControl": "192.168.159.35"
       },
     {
-      "ipData": "10.0.0.10",
-      "ipControl": "192.168.165.169"
+      "ipData": "10.0.0.20",
+      "ipControl": "192.168.159.21"
     }
   ],
   "encAlg": [
@@ -124,12 +124,10 @@ curl -X 'POST' \
     "sha2-256"
   ],
   "softLifetime": {
-    "nTime": 25
+    "nTime": 1500
   },
   "hardLifetime": {
-    "nTime": 50
+    "nTime": 3000
   }
 }'
-
-
 ```
