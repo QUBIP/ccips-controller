@@ -1,6 +1,5 @@
 {
     "sad-entry": {
-      "nc:operation": "delete",
       "name": "ID_NAME",
       "reqid": "REQ_ID"
     }

@@ -114,7 +114,7 @@ func (config *Handler) ToJSON(id uuid.UUID) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	log.Debug("pruebaaaa: %s", jsonData)
+	log.Debug("TUNNEL GENERATED WITH THE FOLLOWING CHARACTERISTICS: %s", jsonData)
 	return string(jsonData), nil
 }
 

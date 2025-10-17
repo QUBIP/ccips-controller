@@ -19,6 +19,10 @@ import (
 	"golang.org/x/crypto/ssh"
 )
 
+var (startProvisioning time.Time   
+    endProvisioning   time.Time
+)
+
 type StorageHandler struct {
 	storage map[uuid.UUID]*Handler
 	lock    sync.RWMutex
@@ -41,7 +45,12 @@ func (s *StorageHandler) CreateHandler(request *swagger.I2NSFRequest) (interface
 	if err := h.SetInitialConfigValues(); err != nil {
 		return nil, err
 	}
-	log.Debug("Initial values have been established")
+	endProvisioning = time.Now()
+    log.Debug("[%s] Initial values have been established", endProvisioning.Format("2006-01-02 15:04:05.000"))
+	time_log := endProvisioning.Sub(startProvisioning)
+	green := "\033[32m"
+	reset := "\033[0m"
+	log.Info("%sPROVISIONING TIME: %s%s",green, time_log, reset)
 	log.Debug("Handler assigned to id %s", id.String())
 	s.lock.Lock()
 	defer s.lock.Unlock()
@@ -141,13 +150,18 @@ func NewHandler(request *swagger.I2NSFRequest, id uuid.UUID) (*Handler, error) {
 	node1 := request.Nodes[0].IpControl
 	node2 := request.Nodes[1].IpControl
 	var mode IPsecConfigType
+
+	
 	// Check mode:
+ 
 	if len(request.Nodes[0].NetworkInternal) == 0 {
 		mode = H2H
-		log.Debug("New Handler for H2H mode")
+		startProvisioning = time.Now()
+		log.Debug("[%s] New Handler for H2H mode", startProvisioning.Format("2006-01-02 15:04:05.000"))
 	} else {
 		mode = G2G
-		log.Debug("New Handler for G2G mode")
+		startProvisioning = time.Now()
+		log.Debug("[%s] New Handler for G2G mode", startProvisioning.Format("2006-01-02 15:04:05.000"))
 	}
 	var (
 		encAlg  EncAlgType
@@ -176,8 +190,7 @@ func NewHandler(request *swagger.I2NSFRequest, id uuid.UUID) (*Handler, error) {
 	}
 	cfg1.SetNewSPI()
 	cfg2.SetNewSPI()
-	//h, err:= newHandler(node1, node2, cfg1, cfg2) //añadido para encriptar
-	//return Encrypt(h,swagger.ApiGetCertificate()),err  //añandid para encriptar
+	
 	return newHandler(node1, node2, cfg1, cfg2)
 
 }
@@ -320,6 +333,8 @@ var threshold int64 = 5
 
 // processRekey Handles the rekey process if a SADBExpireNotification notification has been received.
 func (h *Handler) processRekey(notification *SADBExpireNotification) error {
+	startRekey := time.Now() //for rekey Log
+
 	h.locker.Lock()
 	defer h.locker.Unlock()
 	if h.isStopped {
@@ -352,7 +367,7 @@ func (h *Handler) processRekey(notification *SADBExpireNotification) error {
 	}
 	// Check if timer has expired
 	if cfg.spi != int64(spi) || cfg.reKeysDone[int64(spi)] {
-		log.Warning("Rekey of %s has been already completed", s[1])
+		log.Warning("Rekey of SPI %s has been already completed", s[1])
 		return nil
 	}
 
@@ -400,7 +415,10 @@ func (h *Handler) processRekey(notification *SADBExpireNotification) error {
 		return err
 	}
 
-	log.Info("Rekey process of %d already completed", cfg.reqId)
+	duration := time.Since(startRekey) //for rekey Log
+	green := "\033[32m"
+	reset := "\033[0m"
+	log.Info("%sREKEY PROCESS OF %d ALREADY COMPLETED IN %s%s",green, cfg.reqId, duration, reset)
 
 	return nil
 }

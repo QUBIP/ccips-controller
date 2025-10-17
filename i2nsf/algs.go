@@ -57,6 +57,7 @@ var ENCKEYLENGTH = map[EncAlgType]int64{
 	AESGCMV8:     32,
 	AESGCMV12:    48,
 	AESGCMV16:    64,
+
 }
 
 var AUTHKEYLENGTH = map[AuthAlgType]int64{
