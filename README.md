@@ -48,7 +48,7 @@ The CCIPS controller is developed in go using the [`go-netconf-client`](https://
 
 ---
 
-### **4. Hybridization and PQC config parameters in RFC9061
+### **4. Hybridization and PQC config parameters in RFC9061**
 - **Endpoint:** `/forwardqkd`
 - **Method:** `POST`
 - **Summary:** Choose PQC algorithm, hybridization method and use of QKD.
