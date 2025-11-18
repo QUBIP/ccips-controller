@@ -48,6 +48,19 @@ The CCIPS controller is developed in go using the [`go-netconf-client`](https://
 
 ---
 
+### **4. Hybridization and PQC config parameters in RFC9061
+- **Endpoint:** `/forwardqkd`
+- **Method:** `POST`
+- **Summary:** Choose PQC algorithm, hybridization method and use of QKD.
+- **Description:** Add hybridization and PQC config parameters in parallel to RFC9061.
+- **Path Parameters:**
+- `uuid` (string, required): The unique identifier of the IPsec tunnel.
+- **Responses:**
+- `200 OK`: Parameters added successfully.
+- `500 Internal Server Error`: An error occurred while adding the parameters to the tunnel.
+
+
+---
 
 
 ## How to launch
@@ -78,6 +91,21 @@ It will prompt the following message `INFO: 2025/04/09 09:24:19 main.go:12: HTTP
 
 # Requests for the controller:
 
+## Hibridization and PQC
+```json
+curl -X POST http://192.168.159.239:5000/forwardqkd \
+  -H "Content-Type: application/json" \
+  -d '{
+    "use-qkd": "yes",
+    "pqc-algorithm": "kyber-512,
+    "hybridization-method": “xor”,
+    "endpoint1": "192.168.159.35”,
+    "endpoint2": "192.168.159.21”
+  }'
+```
+
+
+## Tunnel stablishment
 * Nodes: Information of the nodes with the following:
     - ipData: IP with which the other agent is going to see it and the one it is going to use to raise the tunnel.
     - ipControl: IP that it has in the control network.
@@ -101,7 +129,7 @@ It will prompt the following message `INFO: 2025/04/09 09:24:19 main.go:12: HTTP
 
 # H2H
 
-```xml
+```json
 curl -X 'POST' \
   'http://192.168.159.239:5000/ccips' \
   -H 'accept: application/json' \
