@@ -92,7 +92,7 @@ It will prompt the following message `INFO: 2025/04/09 09:24:19 main.go:12: HTTP
 # Requests for the controller:
 
 ## Hibridization and PQC
-```json
+```xml
 curl -X POST http://192.168.159.239:5000/forwardqkd \
   -H "Content-Type: application/json" \
   -d '{
@@ -129,7 +129,7 @@ curl -X POST http://192.168.159.239:5000/forwardqkd \
 
 # H2H
 
-```json
+```xml
 curl -X 'POST' \
   'http://192.168.159.239:5000/ccips' \
   -H 'accept: application/json' \
