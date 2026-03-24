@@ -54,9 +54,9 @@ var ENCKEYLENGTH = map[EncAlgType]int64{
 	AESCCMV8:     32,
 	AESCCMV12:    48,
 	AESCCMV16:    64,
-	AESGCMV8:     32,
-	AESGCMV12:    48,
-	AESGCMV16:    64,
+	AESGCMV8:     20,//Changed
+	AESGCMV12:    28,//Changed
+	AESGCMV16:    36,//Changed //optional to have it to 36
 
 }
 

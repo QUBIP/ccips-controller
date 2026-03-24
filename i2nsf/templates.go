@@ -197,9 +197,15 @@ func formatH2HSADValuesJson(config *IpsecConfig, localPrefix, remotePrefix strin
 	t = replace(t, "REMOTE_PREFIX", remotePrefix)
 	t = replace(t, "ENC_ALG", config.cryptoConfig.encAlg)
 	t = replace(t, "ENC_KEY", config.cryptoConfig.encKey)
+	if config.cryptoConfig.encAlg == AESGCMV16 { //añadido para que tenga el valor a 0
+	t = replace(t, "ENC_IV", "")
+	t = replace(t, "INT_ALG", 0)
+	t = replace(t, "INT_KEY", "")
+	} else {
 	t = replace(t, "ENC_IV", config.cryptoConfig.iv)
 	t = replace(t, "INT_ALG", config.cryptoConfig.intAlg)
 	t = replace(t, "INT_KEY", config.cryptoConfig.intKey)
+	}
 	t = replace(t, "HARD_BYTES", config.hardLifetime.nBytes)
 	t = replace(t, "HARD_PACKETS", config.hardLifetime.nPackets)
 	t = replace(t, "HARD_TIME", config.hardLifetime.time)

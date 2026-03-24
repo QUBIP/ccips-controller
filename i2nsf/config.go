@@ -50,15 +50,31 @@ func NewCryptoConfig(encAlg EncAlgType, authAlg AuthAlgType) *CryptoConfig {
 func (c *CryptoConfig) SetNewCryptoValues() error {
 	c.lock.Lock()
 	defer c.lock.Unlock()
-	// Set new encKey
+
+	// AEAD: AES-GCM
+	if c.encAlg == AESGCMV16 {
+		// KEYMAT RFC4106 = AES key + 4-byte salt
+		c.encKey = make([]byte, c.encKeyLength)
+		rand.Read(c.encKey)
+
+		// No auth separada en AEAD
+		c.intKey = nil
+
+		// No usar IV estático para GCM en la SAD
+		c.iv = nil
+		return nil
+	}
+
+	// Resto de algoritmos
 	c.encKey = make([]byte, c.encKeyLength)
 	rand.Read(c.encKey)
-	// Set mew intKey
+
 	c.intKey = make([]byte, c.authKeyLength)
 	rand.Read(c.intKey)
-	// Set IV
+
 	c.iv = make([]byte, c.encKeyLength)
 	rand.Read(c.iv)
+
 	return nil
 }
 

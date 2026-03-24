@@ -164,18 +164,27 @@ func NewHandler(request *swagger.I2NSFRequest, id uuid.UUID) (*Handler, error) {
 		log.Debug("[%s] New Handler for G2G mode", startProvisioning.Format("2006-01-02 15:04:05.000"))
 	}
 	var (
-		encAlg  EncAlgType
-		authAlg AuthAlgType
+	encAlg  EncAlgType
+	authAlg AuthAlgType = 0 // SADB_AALG_NONE / sin integridad separada para AEAD
 	)
+
 	if v, ok := ENCALGS[request.EncAlg[0]]; !ok {
 		return nil, errors.New(fmt.Sprintf("ENC algorithm not found: %s", request.EncAlg[0]))
 	} else {
 		encAlg = v
 	}
-	if v, ok := AUTHALGS[request.IntAlg[0]]; !ok && request.EncAlg[0] != "aes-gcmv-16"{
-		return nil, errors.New(fmt.Sprintf("AUTH algorithm not found: %s", request.IntAlg[0]))
+
+	if request.EncAlg[0] == "aes-gcmv-16" {
+		authAlg = 0
 	} else {
+		if len(request.IntAlg) == 0 {
+			return nil, errors.New("AUTH algorithm not provided")
+		}
+		if v, ok := AUTHALGS[request.IntAlg[0]]; !ok {
+			return nil, errors.New(fmt.Sprintf("AUTH algorithm not found: %s", request.IntAlg[0]))
+		} else {
 		authAlg = v
+		}
 	}
 
 	cryptoConfig := NewCryptoConfig(encAlg, authAlg)
