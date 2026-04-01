@@ -235,3 +235,14 @@ func getCertificate(certID uuid.UUID) (string, error) {
 	}
 	return cert, nil
 }
+
+func ApiListI2nsf(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	response := storage.GetAllIDs()
+	jData, err := json.Marshal(response)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Write(jData)
+}

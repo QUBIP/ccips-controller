@@ -22,6 +22,7 @@ type StorageHandler interface {
 	CreateHandler(request *I2NSFRequest) (interface{}, error)
 	DeleteHandler(id uuid.UUID) error
 	GetConfig(id uuid.UUID) interface{}
+	GetAllIDs() []uuid.UUID
 }
 
 type Route struct {
@@ -68,6 +69,13 @@ var routes = Routes{
 		strings.ToUpper("Post"),
 		"/ccips",
 		ApiCreateI2nsf,
+	},
+
+	Route{
+		"ApiGetAll",
+		"GET",
+		"/ccips-all",
+		ApiListI2nsf,
 	},
 
 	Route{

@@ -99,6 +99,16 @@ func (s *StorageHandler) GetConfig(id uuid.UUID) interface{} {
 	return h.cfg[0].ParseConfigToSwagger()
 }
 
+func (s *StorageHandler) GetAllIDs() []uuid.UUID {
+	s.lock.RLock()
+	defer s.lock.RUnlock()
+	ids := make([]uuid.UUID, 0, len(s.storage))
+	for id := range s.storage {
+		ids = append(ids, id)
+	}
+	return ids
+}
+
 // Para el JSON
 func (s *Handler) GetConfigH() interface{} {
 	return s.cfg[0].ParseConfigToSwagger()
