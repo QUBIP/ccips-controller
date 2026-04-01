@@ -48,7 +48,14 @@ The CCIPS controller is developed in go using the [`go-netconf-client`](https://
 
 ---
 
-### **3. Delete IPsec Tunnel**
+### **3. Get ALL IPsec Tunnel Status**
+- **Endpoint:** `/ccips-all`
+- **Method:** `GET`
+- **Summary:** Retrieve the UUIDs of the deployed IPsec tunels.
+
+---
+
+### **4. Delete IPsec Tunnel**
 - **Endpoint:** `/ccips/{uuid}`
 - **Method:** `DELETE`
 - **Summary:** Delete an IPsec tunnel.
@@ -62,7 +69,7 @@ The CCIPS controller is developed in go using the [`go-netconf-client`](https://
 
 ---
 
-### **4. Hybridization and PQC config parameters in RFC9061**
+### **5. Hybridization and PQC config parameters in RFC9061**
 - **Endpoint:** `/forwardqkd`
 - **Method:** `POST`
 - **Summary:** Choose PQC algorithm, hybridization method and use of QKD.
